@@ -37,6 +37,11 @@
 
         <link href="css/templatemo-festava-live.css" rel="stylesheet">
 
+                <!-- css animate -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
 
     </head>
     
@@ -44,29 +49,29 @@
 
         <main>
 
-            <header class="site-header">
-                <div class="container">
-                    <div class="row">
-                        
-                        <div class="col-lg-12 col-12 d-flex flex-wrap">
-                            <p class="d-flex  mb-0 mx-auto">
-                                <i class="bi-person custom-icon me-2"></i>
-                                <strong class="text-dark">Weekly Draws- <a href="index.html">LuckyMe</a></strong>
-                            </p>
-                        </div>
-
-                    </div>
+                <header class="site-header">
+            <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-12 d-flex flex-wrap">
+                <p class="d-flex mx-auto mb-0">
+                    <i class="bi-person custom-icon me-2"></i>
+                    <strong class="text-dark animate__heartBeat"
+                    >Welcome to <a href="index.php">LuckyMe</a></strong
+                    >
+                </p>
                 </div>
-            </header>
+            </div>
+            </div>
+        </header>
 
             <section class="draw draw-padding">
                 <div class="draw-overlay"></div>
 
-                <div class="container">
-                    <div class="row">
+            <div class="container">
 
+                    <div class="row" id="draw-form">
                         <div class="col-lg-6 col-10 mx-auto">
-                            <form class="custom-form draw-form-weekly mb-5 mb-lg-0" action="" method="" role="form">
+                            <form class="animate__animated animate__fadeInRight custom-form draw-form-weekly mb-5 mb-lg-0" action="" method="" role="form">
                                 <h2 class="text-center mb-4">Weekly Raffle Draw</h2>
 
                                 <div class="draw-form-body">
@@ -120,8 +125,23 @@
                             
                                 </div>
                             </form>
-                    </div>
                 </div>
+                    </div>
+
+                <div class="row" id="start-page">
+                <div class="col-lg-6 col-10 mx-auto animate__animated animate__fadeInRight custom-form draw-form mb-5 mb-lg-0">
+                    <h2 class="text-center" id="daily">Weekly Raffle Draw</h2>
+                            <div class="text-center">
+                            
+                                <!-- <img src="./images/junetoken.jpeg" class="w-50" /> -->
+                                <div id="countdown" style="font-size: 200px; font-weight:800"></div>
+                                <button type="button" class="btn btn-warning rounded-3 px-4 py-2" id="start">Start Draw</button>
+                        
+                            </div>
+                        </div>
+                </div>
+                
+        </div>
             </section>
         </main>
 
@@ -160,9 +180,52 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.sticky.js"></script>
+        <script  type="text/javascript" language="javascript">
+            $(document).ready(function(){
+
+                $('#draw-form').hide();
+                $('#start').hide();
+
+                $('#start').click(function(){
+                    $('#start-page').hide();
+                    $('#draw-form').show();
+                })
+                var timeLeft = 20;
+                var elem = document.getElementById('countdown');
+                
+                var timerId = setInterval(countdown, 1000);
+                
+                function countdown() {
+                    if(timeLeft == 19){
+                    document.getElementById('daily').innerHTML = "<h1 class='animate__animated animate__bounceIn' style='font-size: 62px;'>Starting Now.. </h1>";
+                    }
+                    if(timeLeft == 15){
+                    document.getElementById('daily').innerHTML = "<h1 class='animate__animated animate__bounceIn'style='font-size: 62px;'>Loading... </h1>";
+                    }
+                    if(timeLeft == 10){
+                    document.getElementById('daily').innerHTML = "<h1 class='animate__animated animate__bounceIn' style='font-size: 62px;'>Randomizing.. </h1>";
+                    }
+                    if(timeLeft == 5){
+                    document.getElementById('daily').innerHTML = "<h1 class='animate__animated animate__bounceIn' style='font-size: 62px;'>Getting Set.. </h1>";
+                    }
+                    if(timeLeft == 0){
+                    document.getElementById('daily').innerHTML = "<h1 class='animate__animated animate__heartBeat' style='font-size: 62px;'>READY!!! </h1>";
+                    }
+                    if (timeLeft == -1) {
+                    clearTimeout(timerId);
+                        $('#countdown').hide(2000);
+                        $('#start').show(2000);
+                    } else {
+                    elem.innerHTML = "<h1 class='animate__animated animate__heartBeat'>" + timeLeft + "</h1>";
+                    timeLeft--;
+                    }
+                }
+            
+            })
+        </script>
         <script src="js/weekly.js"></script>
 
-         <script type="text/javascript" language="javascript">
+        <script type="text/javascript" language="javascript">
             var msisdn = <?php echo json_encode($msisdn); ?>;
             var counts;
             function updated(){
@@ -182,6 +245,7 @@
 
             function stopMsisdnOne(){
                 clearInterval(counts);
+                document.getElementById('select_one').innerHTML = "Winner!!";
                 var winner = document.getElementById('msisdn_one').innerHTML;
                 console.log(winner);
                 $.ajaxSetup({
@@ -206,7 +270,7 @@
             }
         </script>
 
-         <script type="text/javascript" language="javascript">
+        <script type="text/javascript" language="javascript">
             var msisdn = <?php echo json_encode($msisdn); ?>;
             var counts;
             function updatedTwo(){
@@ -217,11 +281,12 @@
                 }
             }
             function rollMsisdnTwo() {
-                counts = setInterval(updatedTwo,40); 
+                counts = setInterval(updatedTwo); 
             }
 
             function stopMsisdnTwo(){
                 clearInterval(counts);
+                document.getElementById('select2').innerHTML = "Winner!!";
                 var winner = document.getElementById('msisdn2').innerHTML;
                 console.log(winner);
                 $.ajaxSetup({
@@ -246,7 +311,7 @@
             }
         </script>
 
-         <script type="text/javascript" language="javascript">
+        <script type="text/javascript" language="javascript">
             var msisdn = <?php echo json_encode($msisdn); ?>;
             var counts;
             function updatedThree(){
@@ -257,11 +322,12 @@
                 }
             }
             function rollMsisdnThree() {
-                counts = setInterval(updatedThree,40); 
+                counts = setInterval(updatedThree); 
             }
 
             function stopMsisdnThree(){
                 clearInterval(counts);
+                document.getElementById('select3').innerHTML = "Winner!!";
                 var winner = document.getElementById('msisdn3').innerHTML;
                 console.log(winner);
                 $.ajaxSetup({
@@ -286,7 +352,7 @@
             }
         </script>
 
-         <script type="text/javascript" language="javascript">
+        <script type="text/javascript" language="javascript">
             var msisdn = <?php echo json_encode($msisdn); ?>;
             var counts;
             function updatedFour(){
@@ -297,11 +363,12 @@
                 }
             }
             function rollMsisdnFour() {
-                counts = setInterval(updatedFour,40); 
+                counts = setInterval(updatedFour); 
             }
 
             function stopMsisdnFour(){
                 clearInterval(counts);
+                document.getElementById('select4').innerHTML = "Winner!!";
                 var winner = document.getElementById('msisdn4').innerHTML;
                 console.log(winner);
                 $.ajaxSetup({
@@ -326,7 +393,7 @@
             }
         </script>
 
-         <script type="text/javascript" language="javascript">
+        <script type="text/javascript" language="javascript">
             var msisdn = <?php echo json_encode($msisdn); ?>;
             var counts;
             function updatedFive(){
@@ -337,11 +404,12 @@
                 }
             }
             function rollMsisdnFive() {
-                counts = setInterval(updatedFive,40); 
+                counts = setInterval(updatedFive); 
             }
 
             function stopMsisdnFive(){
                 clearInterval(counts);
+                document.getElementById('select5').innerHTML = "Winner!!";
                 var winner = document.getElementById('msisdn5').innerHTML;
                 console.log(winner);
                 $.ajaxSetup({

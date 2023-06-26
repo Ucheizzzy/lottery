@@ -91,14 +91,14 @@
                 </div>
 
 
-                <div class="row">
+                <div class="row" id="start-page">
                     <div class="col-lg-6 col-10 mx-auto animate__animated animate__fadeInRight custom-form draw-form mb-5 mb-lg-0">
-                        
-                                <h2 class="text-center mb-4">Daily Raffle Draw</h2>
-
-                                <div class="draw-form-body">
+                        <h2 class="text-center" id="daily">Daily Raffle Draw</h2>
+                                <div class="text-center">
                               
-                              
+                                  <!-- <img src="./images/junetoken.jpeg" class="w-50" /> -->
+                                  <div id="countdown" style="font-size: 200px; font-weight:800"></div>
+                                  <button type="button" class="btn btn-warning rounded-3 px-4 py-2" id="start">Start Draw</button>
                             
                                 </div>
                             </div>
@@ -140,10 +140,47 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.sticky.js"></script>
-          <script>
+          <script  type="text/javascript" language="javascript">
           $(document).ready(function(){
 
               $('#draw-form').hide();
+              $('#start').hide();
+
+              $('#start').click(function(){
+                $('#start-page').hide();
+                $('#draw-form').show();
+              })
+              var timeLeft = 20;
+              var elem = document.getElementById('countdown');
+              
+              var timerId = setInterval(countdown, 1000);
+              
+              function countdown() {
+                if(timeLeft == 19){
+                  document.getElementById('daily').innerHTML = "<h1 class='animate__animated animate__bounceIn' style='font-size: 62px;'>Starting Now.. </h1>";
+                }
+                if(timeLeft == 15){
+                  document.getElementById('daily').innerHTML = "<h1 class='animate__animated animate__bounceIn'style='font-size: 62px;'>Loading... </h1>";
+                }
+                if(timeLeft == 10){
+                  document.getElementById('daily').innerHTML = "<h1 class='animate__animated animate__bounceIn' style='font-size: 62px;'>Randomizing.. </h1>";
+                }
+                if(timeLeft == 5){
+                  document.getElementById('daily').innerHTML = "<h1 class='animate__animated animate__bounceIn' style='font-size: 62px;'>Getting Set.. </h1>";
+                }
+                if(timeLeft == 0){
+                  document.getElementById('daily').innerHTML = "<h1 class='animate__animated animate__heartBeat' style='font-size: 62px;'>READY!!! </h1>";
+                }
+                if (timeLeft == -1) {
+                  clearTimeout(timerId);
+                    $('#countdown').hide(2000);
+                    $('#start').show(2000);
+                } else {
+                  elem.innerHTML = "<h1 class='animate__animated animate__heartBeat'>" + timeLeft + "</h1>";
+                  timeLeft--;
+                }
+              }
+          
           })
         </script>
         <script src="js/custom.js"></script>
@@ -171,6 +208,7 @@
 
             function stopMsisdn(){
                 clearInterval(counts);
+                document.getElementById('select').innerHTML = "Winner!!";
                 var winner = document.getElementById('msisdn').innerHTML;
                 console.log(winner);
                 $.ajaxSetup({
