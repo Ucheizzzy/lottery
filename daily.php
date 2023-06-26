@@ -141,8 +141,10 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.sticky.js"></script>
           <script  type="text/javascript" language="javascript">
-          $(document).ready(function(){
 
+         
+          $(document).ready(function(){
+    
               $('#draw-form').hide();
               $('#start').hide();
 
@@ -186,8 +188,6 @@
         <script src="js/custom.js"></script>
 
       
-
-
         <script type="text/javascript" language="javascript">
             var msisdn = <?php echo json_encode($msisdn); ?>;
             var counts;
@@ -199,10 +199,10 @@
                 }
             }
             function rollMsisdn() {
-                // audio effect
+              // audio effect
                 var suspense = new Audio('./effect/suspense.mp3');
                 suspense.play();
-                // suspense.loop = true;
+                suspense.loop = true;
                 counts = setInterval(updated); 
             }
 
